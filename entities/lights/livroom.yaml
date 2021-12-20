@@ -6,8 +6,6 @@ state_topic: "hubitat/madhouse-hub-000d/living-room-light-148/switch"
 command_topic: "hubitat/madhouse-hub-000d/living-room-light-148/cmd/switch"
 payload_on: "on"
 payload_off: "off"
-state_on: "on"
-state_off: "off"
 optimistic: false
 qos: 0
 retain: true
