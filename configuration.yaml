@@ -1,0 +1,194 @@
+homeassistant:
+  name: Home
+  latitude: !env_var SECRET_ZONE_HOME_LATITUDE
+  longitude: !env_var SECRET_ZONE_HOME_LONGITUDE
+  elevation: !env_var SECRET_ZONE_HOME_ELEVATION
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+http:
+  use_x_forwarded_for: true
+  trusted_proxies:
+    - 10.42.0.0/16
+    - 192.168.0.0/16
+#sensor:
+#  - platform: dte_energy_bridge
+#    ip: 192.168.10.131
+#    version: 2
+#    name: DTE Energy Brige
+
+sensor:
+###############################
+## DTE Energy Bridge         ##
+  - platform: mqtt 
+    name: "DTE Instantaneous Demand" 
+    state_topic: "event/metering/instantaneous_demand" 
+    unit_of_measurement: 'W' 
+    value_template: "{{ value_json.demand | round(0) }}"
+
+  - platform: mqtt
+    name: "DTE Energy Bridge Summary"
+    state_topic: "event/metering/summation/minute"
+    unit_of_measurement: 'W'
+    value_template: "{{ value_json.value | round(0) }}" 
+
+  - platform: integration
+    source: sensor.dte_energy_bridge_summary
+    name: energy_spent
+    unit_prefix: k
+    round: 2
+#####################################
+
+
+#################
+# UTILITY METER # 
+#################
+utility_meter:
+  energy_daily:
+    source: sensor.energy_spent
+    cycle: daily
+    tariffs:
+      - standard
+
+opnsense:
+  url: !env_var SECRET_OPNSENSE_URL
+  api_secret: !env_var SECRET_OPNSENSE_SECRET
+  api_key: !env_var SECRET_OPNSENSE_KEY
+
+
+recorder:
+
+  # The URL that points to your database.
+  db_url: !env_var SECRET_RECORDER_DB_URL
+
+  # The number of days of history to keep in the recorder database
+  purge_keep_days: 32
+
+  # Exclude the following items from recordings
+  exclude:
+    # The list of entity ids to be excluded from recordings.
+    entities:
+      - sensor.date
+      - sensor.date_time
+      - sensor.time
+      - sensor.time_utc
+
+#######################
+##  Hubitat Devices  ##
+#######################
+
+switch:
+  - platform: mqtt
+    unique_id: "kitchen-light-145"
+    name: "Kitchen Lights"
+    state_topic: "hubitat/madhouse-hub-000d/kitchen-light-145/switch"
+    command_topic: "hubitat/madhouse-hub-000d/kitchen-light-145/cmd/switch"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
+
+  - platform: mqtt
+    unique_id: "bedroom-light-16"
+    name: "Bedroom Lights"
+    state_topic: "hubitat/madhouse-hub-000d/bedroom-light-16/switch"
+    command_topic: "hubitat/madhouse-hub-000d/bedroom-light-16/cmd/switch"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
+
+  - platform: mqtt
+    unique_id: "larry-s-lamp-79"
+    name: "Larrys Lamp"
+    state_topic: "hubitat/madhouse-hub-000d/larry-s-lamp-79/switch"
+    command_topic: "hubitat/madhouse-hub-000d/larry-s-lamp-79/cmd/switch"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
+
+  - platform: mqtt
+    unique_id: "carrie-s-lamp-113"
+    name: "Carries Lamp"
+    state_topic: "hubitat/madhouse-hub-000d/carrie-s-lamp-113/switch"
+    command_topic: "hubitat/madhouse-hub-000d/carrie-s-lamp-113/cmd/switch"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
+
+  - platform: mqtt
+    unique_id: "hallway-light-146"
+    name: "Hallway Light"
+    state_topic: "hubitat/madhouse-hub-000d/hallway-light-146/switch"
+    command_topic: "hubitat/madhouse-hub-000d/hallway-light-146/cmd/switch"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
+
+  - platform: mqtt
+    unique_id: "living-room-light-148"
+    name: "Living room Light"
+    state_topic: "hubitat/madhouse-hub-000d/living-room-light-148/switch"
+    command_topic: "hubitat/madhouse-hub-000d/living-room-light-148/cmd/switch"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
+
+  - platform: mqtt
+    unique_id: "christmas-lights-78"
+    name: "Christmas Light"
+    state_topic: "hubitat/madhouse-hub-000d/christmas-lights-78/switch"
+    command_topic: "hubitat/madhouse-hub-000d/christmas-lights-78/cmd/switch"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
+
+  - platform: mqtt
+    unique_id: "christmas-tree-80"
+    name: "Christmas Tree"
+    state_topic: "hubitat/madhouse-hub-000d/christmas-tree-80/switch"
+    command_topic: "hubitat/madhouse-hub-000d/christmas-tree-80/cmd/switch"
+    payload_on: "on"
+    payload_off: "off"
+    state_on: "on"
+    state_off: "off"
+    optimistic: false
+    qos: 0
+    retain: true
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+packages: !include_dir_named integrations
+allowlist_external_dirs: !include whitelist_external_dirs.yaml
