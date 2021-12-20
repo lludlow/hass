@@ -1,0 +1,13 @@
+---
+platform: mqtt
+unique_id: "carrie-s-lamp-113"
+name: "Carries Lamp"
+state_topic: "hubitat/madhouse-hub-000d/carrie-s-lamp-113/switch"
+command_topic: "hubitat/madhouse-hub-000d/carrie-s-lamp-113/cmd/switch"
+payload_on: "on"
+payload_off: "off"
+state_on: "on"
+state_off: "off"
+optimistic: false
+qos: 0
+retain: true

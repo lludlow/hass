@@ -1,0 +1,13 @@
+---
+platform: mqtt
+unique_id: "larry-s-lamp-79"
+name: "Larrys Lamp"
+state_topic: "hubitat/madhouse-hub-000d/larry-s-lamp-79/switch"
+command_topic: "hubitat/madhouse-hub-000d/larry-s-lamp-79/cmd/switch"
+payload_on: "on"
+payload_off: "off"
+state_on: "on"
+state_off: "off"
+optimistic: false
+qos: 0
+retain: true

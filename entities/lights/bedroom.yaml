@@ -1,0 +1,13 @@
+---
+platform: mqtt
+unique_id: "bedroom-light-16"
+name: "Bedroom Lights"
+state_topic: "hubitat/madhouse-hub-000d/bedroom-light-16/switch"
+command_topic: "hubitat/madhouse-hub-000d/bedroom-light-16/cmd/switch"
+payload_on: "on"
+payload_off: "off"
+state_on: "on"
+state_off: "off"
+optimistic: false
+qos: 0
+retain: true

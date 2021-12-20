@@ -1,0 +1,13 @@
+---
+platform: mqtt
+unique_id: "christmas-tree-80"
+name: "Christmas Tree"
+state_topic: "hubitat/madhouse-hub-000d/christmas-tree-80/switch"
+command_topic: "hubitat/madhouse-hub-000d/christmas-tree-80/cmd/switch"
+payload_on: "on"
+payload_off: "off"
+state_on: "on"
+state_off: "off"
+optimistic: false
+qos: 0
+retain: true
