@@ -6,6 +6,8 @@ state_topic: "hubitat/madhouse-hub-000d/kitchen-light-145/switch"
 command_topic: "hubitat/madhouse-hub-000d/kitchen-light-145/cmd/switch"
 payload_on: "on"
 payload_off: "off"
+state_on: "on"
+state_off: "off"
 optimistic: false
 qos: 0
 retain: true
