@@ -3,7 +3,11 @@ homeassistant:
   latitude: !env_var HASS_LATITUDE
   longitude: !env_var HASS_LONGITUDE
   elevation: !env_var HASS_ELEVATION
+  packages: !include_dir_named integrations
+  allowlist_external_dirs: !include whitelist_external_dirs.yaml
+
 # Configure a default setup of Home Assistant (frontend, api, etc)
+
 default_config:
 
 http:
@@ -190,5 +194,4 @@ group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
 scene: !include scenes.yaml
-packages: !include_dir_named integrations
-allowlist_external_dirs: !include whitelist_external_dirs.yaml
+
